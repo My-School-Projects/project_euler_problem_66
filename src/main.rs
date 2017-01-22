@@ -1,50 +1,24 @@
-use std::thread;
-use std::sync::mpsc::channel;
 
 fn main()
 {
-    let target_d_value = 1000;
+    let target_d_value = 50;
 
-    let (tx, rx) = channel();
+    let mut max_x = 0 as i64;
+    let mut d_with_largest_x = 0;
 
-    let chunk_size = 10;
+    for d in 0..target_d_value+1 {
+        // We can only find x if d is not a perfect square
+        if !is_perfect_square(d) {
+            let x = find_minimal_x(d);
 
-    let number_of_threads = target_d_value / chunk_size + 1;
-
-    for i in 0..number_of_threads {
-        // start will iterate from 0 to target_d_value in increments of 20.
-        let start = i*chunk_size;
-        let end = if start + chunk_size-1 > target_d_value { target_d_value } else { start + chunk_size-1 };
-
-        let tx = tx.clone();
-        let start = start.clone();
-
-        thread::spawn(move || {
-            let mut max_x = 0 as i64;
-            let mut d_with_largest_x = 0;
-
-            for d in start..end {
-                // We can only find x if d is not a perfect square
-                if !is_perfect_square(d) {
-                    let x = find_minimal_x(d);
-
-                    if x > max_x {
-                        max_x = x;
-                        d_with_largest_x = d;
-                    }
-                }
+            if x > max_x {
+                max_x = x;
+                d_with_largest_x = d;
             }
-
-            tx.send((start, end, d_with_largest_x)).unwrap();
-        });
+        }
     }
 
-    for _ in 0..number_of_threads {
-        println!("{:?}", rx.recv().unwrap());
-    }
-
-//
-//    println!("The value of D ≤ {} in minimal solutions of x for which the largest value of x is obtained is: {}", target_d_value, d_with_largest_x);
+    println!("The value of D ≤ {} in minimal solutions of x for which the largest value of x is obtained is: {}", target_d_value, d_with_largest_x);
 }
 
 ///
