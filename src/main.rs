@@ -5,18 +5,22 @@
 
 fn main()
 {
-    for d in 0...50 {
+    let target_d_value = 50;
+
+    let mut max_x = 0 as i64;
+
+    for d in 0...target_d_value {
         // We can only find x if d is not a perfect square
         if !is_perfect_square(d) {
             let x = find_minimal_x(d);
-            // find_minimal_x doesn't tell us the y value,
-            // so if we want to display it we'll have to solve for it.
-            // y = sqrt((x^2 - 1) / D)
-            let y = (((x * x - 1) / d) as f64).sqrt();
 
-            println!("{}^2 - {}x{}^2", x, d, y);
+            if x > max_x {
+                max_x = x;
+            }
         }
     }
+
+    println!("Maximum x value for D ≤ {}: {}", target_d_value, max_x);
 }
 
 ///
