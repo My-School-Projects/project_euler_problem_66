@@ -8,11 +8,19 @@ fn main()
 ///
 fn is_perfect_square(n: i64) -> bool
 {
-    // If n is a perfect square, then its square root will be an integer.
-    // Take the square root
+    // Take the square root of n
     let root_n = (n as f64).sqrt();
-    // Round root_n to the nearest integer value
-    let rounded = root_n.round();
-    // If rounded == root_n, then root_n is an integer.
-    rounded == root_n
+    // If the square root of n is an integer, then n is a perfect square.
+    is_an_integer(n)
+}
+
+///
+/// Evaluates true if n is an integer.
+///
+fn is_an_integer(n: f64) -> bool
+{
+    // Round n to the nearest integer value
+    let rounded = n.round();
+    // If n and its rounded counterpart are equal, then n is an integer.
+    n == rounded
 }
