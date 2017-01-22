@@ -11,7 +11,7 @@ fn is_perfect_square(n: i64) -> bool
     // Take the square root of n
     let root_n = (n as f64).sqrt();
     // If the square root of n is an integer, then n is a perfect square.
-    is_an_integer(n)
+    is_an_integer(root_n)
 }
 
 ///
