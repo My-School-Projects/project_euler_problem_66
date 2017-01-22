@@ -1,6 +1,48 @@
+// Allow the use of the n...m syntax
+// n...m is an inclusive range (n through m)
+// whereas n..m is n through m-1
+#![feature(inclusive_range_syntax)]
+
 fn main()
 {
-    println!("{}, {}", is_perfect_square(25), is_perfect_square(26));
+    for d in 0...50 {
+        // We can only find x if d is not a perfect square
+        if !is_perfect_square(d) {
+            let x = find_minimal_x(d);
+            // find_minimal_x doesn't tell us the y value,
+            // so if we want to display it we'll have to solve for it.
+            // y = sqrt((x^2 - 1) / D)
+            let y = (((x * x - 1) / d) as f64).sqrt();
+
+            println!("{}^2 - {}x{}^2", x, d, y);
+        }
+    }
+}
+
+///
+/// Returns the smallest x for which x^2 - Dy^2 = 1,
+/// where D is given and y is a positive integer.
+///
+/// This function will block indefinitely if D is a perfect square.
+///
+fn find_minimal_x(d: i64) -> i64
+{
+    // We are brute force searching for the y that will give us the smallest x.
+    // Smaller y values will give us smaller x values, so we will start at 1
+    // and iterate as long as it takes to find an x value that is an integer.
+    let mut y = 1 as i64;
+
+    loop {
+        // x = sqrt(Dy^2 + 1)
+        let x = ((d * y * y + 1) as f64).sqrt();
+        // If x is an integer, then we're done, and we will return x.
+        // Otherwise, we will increment y and continue searching.
+        if is_an_integer(x) {
+            return x as i64;
+        } else {
+            y = y + 1;
+        }
+    }
 }
 
 ///
