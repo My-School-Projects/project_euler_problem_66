@@ -1,7 +1,3 @@
-// Allow the use of the n...m syntax
-// n...m is an inclusive range (n through m)
-// whereas n..m is n through m-1
-#![feature(inclusive_range_syntax)]
 
 fn main()
 {
@@ -10,7 +6,7 @@ fn main()
     let mut max_x = 0 as i64;
     let mut d_with_largest_x = 0;
 
-    for d in 0...target_d_value {
+    for d in 0..target_d_value+1 {
         // We can only find x if d is not a perfect square
         if !is_perfect_square(d) {
             let x = find_minimal_x(d);
