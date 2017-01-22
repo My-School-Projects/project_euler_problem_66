@@ -8,6 +8,7 @@ fn main()
     let target_d_value = 50;
 
     let mut max_x = 0 as i64;
+    let mut d_with_largest_x = 0;
 
     for d in 0...target_d_value {
         // We can only find x if d is not a perfect square
@@ -16,11 +17,12 @@ fn main()
 
             if x > max_x {
                 max_x = x;
+                d_with_largest_x = d;
             }
         }
     }
 
-    println!("Maximum x value for D ≤ {}: {}", target_d_value, max_x);
+    println!("The value of D ≤ {} in minimal solutions of x for which the largest value of x is obtained is: {}", target_d_value, d_with_largest_x);
 }
 
 ///
